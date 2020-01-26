@@ -6,6 +6,7 @@
 /public/bundles/
 /var/
 /vendor/
+/src/Migrations
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -17,3 +18,4 @@
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
+.DS_Store

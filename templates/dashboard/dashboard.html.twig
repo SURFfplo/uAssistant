@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	
+    {{ parent() }}
+    
+    <style>
+    /* Grid */
+				.grid {
+				  position: relative;
+				}
+				
+				.item {
+				  display: block;
+				  position: absolute;
+				  width: 100px;
+				  height: 100px;
+				  margin: 5px;
+				  z-index: 1;
+				  background: #{{ my_function('PRIMARY_COLOR') }};
+				  color: #000000;
+				  border-radius: 6px;
+				}
+				
+				.item:hover {
+				  display: block;
+				  position: absolute;
+				  width: 100px;
+				  height: 100px;
+				  margin: 5px;
+				  z-index: 1;
+				  background: #{{ my_function('SECONDARY_COLOR') }};
+				  border-radius: 6px;
+				}
+				
+				.item.muuri-item-dragging {
+				  z-index: 3;
+				}
+				
+				.item.muuri-item-releasing {
+				  z-index: 2;
+				}
+				
+				.item.muuri-item-hidden {
+				  z-index: 0;
+				}
+				.item-content {
+				  position: relative;
+				  width: 100%;
+				  height: 100%;
+				}
+				
+				.item .icon {
+				  position: absolute;
+				  color: #{{ my_function('PRIMARY_TEXT_COLOR') }};
+				  font-size: 42px;
+				  margin-top: -8px;
+				  margin-left: 2px;
+				  text-align: center;
+				}
+				
+				.item:hover .icon {
+				  color: #{{ my_function('SECONDARY_TEXT_COLOR') }};
+				}
+				
+				.item .tile-label {
+				  position: absolute;
+				  color: #{{ my_function('PRIMARY_TEXT_COLOR') }};
+				  bottom: 0;
+				  left: 2px;
+				  padding: 3px;
+				  z-index: 999;
+				  font-size: 12px;
+				  font-weight: 600;
+				  text-transform: uppercase;
+				}
+				
+				.item:hover .tile-label {
+				  color: #{{ my_function('SECONDARY_TEXT_COLOR') }};
+				}
+    </style>
+{% endblock %}
+
+{% block dashIcon %}
+	<a href="{{ path('dashboard') }}" class="notification"><i class="mdi mdi-dots-vertical"></i></a>
+{% endblock %}
+
+{% block buttons %}
+
+	<!-- Buttons -->
+	<div class="row float-right top-buffer right-buffer">
+		<a href="{{ path('add_button') }}" class="button right-buffer"><i class="mdi mdi-pencil"></i></a>
+		<a href="#" class="button"><i class="mdi mdi-cursor-move"></i></a>
+	</div>
+	<!-- End Buttons -->
+	
+{% endblock %}
+
+{% block body %}
+	<h2>{{ data.name }}</h2>
+	
+	<div class="grid">
+
+
+
+
+		
+		
+	
+	</div>	
+	
+
+{% endblock %}
+
+{% block javascripts %}  
+	
+	{{ parent() }}
+	
+{% endblock %}
+
+
+

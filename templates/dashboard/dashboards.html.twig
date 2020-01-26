@@ -1,0 +1,205 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	
+	{{ parent() }} 
+		
+	<style>	
+		
+    /* Grid */
+	.grid {
+	  position: relative;
+	}
+	
+	.item {
+	  position: absolute;
+      width: 100%;
+	  margin: 5px 0;
+	  z-index: 1;
+	  background: #{{ my_function('PRIMARY_COLOR') }};
+	  color: #000000;
+	  border-radius: 6px;
+	}
+	
+	.item:hover {
+	  position: absolute;
+      width: 100%;
+	  margin: 5px 0;
+	  z-index: 1;
+	  background: #{{ my_function('PRIMARY_COLOR') }};
+	  color: #000000;
+	  border-radius: 6px;
+	}
+	
+	.item-content {
+      position: relative;
+      padding: 15px;
+      background: #{{ my_function('PRIMARY_COLOR') }};
+      border-radius: 6px;
+      font-size: 17px;
+      cursor: pointer;
+      -webkit-box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
+      box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
+    }
+    
+    .icon-buffer { 
+		margin-right:0px; 	
+	}
+	
+	.item.muuri-item-dragging {
+	  z-index: 3;
+	}
+	
+	.item.muuri-item-releasing {
+	  z-index: 2;
+	}
+	
+	.item.muuri-item-hidden {
+	  z-index: 0;
+	}
+	
+	a {
+		color: #{{ my_function('PRIMARY_TEXT_COLOR') }}; 
+	}
+	a:hover {
+		color: #{{ my_function('SECONDARY_TEXT_COLOR') }}; 
+	}
+
+		</style> 
+	
+{% endblock %}
+	
+
+{% block buttons %}
+	<!-- Buttons -->
+	<div class="row float-right top-buffer right-buffer">
+		<a href="{{ path('dashboard-create') }}" class="button right-buffer"><i class="mdi mdi-plus"></i></a>
+	</div>
+	<!-- End Buttons -->
+{% endblock %}
+
+{% block dashIcon %}
+	<a href="{{ path('home') }}" class="notification"><i class="mdi mdi-close-box-outline"></i></a>
+{% endblock %}
+
+{% block body %}
+	<h2>Dashboards</h2>
+	<br>	
+	<div class="grid">
+    
+    {% for data in data %}
+    	<div class="item" data-id="{{ data.id }}">
+			<div class="item-content">
+		        <!-- Safe zone, enter your custom markup -->
+		        <div class="row float-right icon-buffer">
+			        <b>
+                        <i class="mdi mdi-arrow-all"></i></a>
+			        	<a href="{{ path('dashboard-edit', {'id': data.dashboardId.id}) }}"><i class="mdi mdi-pencil"></i></a>
+			        	<a href="{{ path('dashboard-delete', {'id': data.dashboardId.id}) }}" onclick="return confirm('Weet je zeker dat je dashboard: {{ data.dashboardId.name}} wilt verwijderen?');"><i class="mdi mdi-delete"></i></a>
+			        </b>
+		        </div>
+		        <b><div style="text-transform: uppercase;">{{ data.dashboardId.name}}</div></b>
+				<p>{{ data.dashboardId.description}}</p>
+				<b>
+					{% if data.dashboardId.hidden == false %}
+						<i class="mdi mdi-eye"></i>
+					{% else %}
+						<i class="mdi mdi-eye-off"></i>
+					{% endif %}
+					{% if data.dashboardId.public == false %}
+						<i class="mdi mdi-account"></i></b>
+					{% else %}
+						<i class="mdi mdi-account-multiple"></i></b>
+					{% endif %}				
+		        <!-- Safe zone ends -->
+			</div>
+			</div>
+    {% endfor %}
+    
+    </div>
+			    
+{% endblock %}
+
+{% block javascripts %}  
+        
+        	{{ parent() }}
+
+			<script>
+			
+			 
+			 //Close alert after x seconds:
+			 window.setTimeout(function() {
+			    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+			        $(this).remove(); 
+			    });
+			}, 4000);
+			
+			
+			
+initGrid();
+
+function initGrid() {
+  var grid = new Muuri('.grid', {
+    dragEnabled: true,
+    layoutOnInit: true
+  }).on('move', function () {
+    saveLayout(grid);
+  });
+
+  var layout = window.localStorage.getItem('layout');
+  if (layout) {
+    loadLayout(grid, layout);
+  } else {
+    grid.layout(true);
+  }
+}
+
+function serializeLayout(grid) {
+  var itemIds = grid.getItems().map(function (item) {
+    return item.getElement().getAttribute('data-id');
+  });
+  return JSON.stringify(itemIds);
+}
+
+function saveLayout(grid) {
+  var layout = serializeLayout(grid);
+  
+  $.ajax({
+            data: layout,
+            type: 'POST',
+            url: '/dashboards/sort'
+        });
+        
+  //window.localStorage.setItem('layout', layout);
+}
+
+
+
+function loadLayout(grid, serializedLayout) {
+  var layout = JSON.parse(serializedLayout);
+  var currentItems = grid.getItems();
+  var currentItemIds = currentItems.map(function (item) {
+    return item.getElement().getAttribute('data-id')
+  });
+  var newItems = [];
+  var itemId;
+  var itemIndex;
+
+  for (var i = 0; i < layout.length; i++) {
+    itemId = layout[i];
+    itemIndex = currentItemIds.indexOf(itemId);
+    if (itemIndex > -1) {
+      newItems.push(currentItems[itemIndex])
+    }
+  }
+
+  grid.sort(newItems, {layout: 'instant'});
+}
+			
+			</script>
+
+
+
+
+
+        {% endblock %}

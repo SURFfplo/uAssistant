@@ -1,0 +1,12 @@
+{% for menu in menu %}
+
+	{% if menu.dashboardId.hidden == false %}
+		<li class="nav-item
+			{% if menu.dashboardId.id == id %}
+				active
+			{% endif %}
+		">
+			<a class="nav-link" style="text-transform: uppercase;" href="{{ path('dashboard-view', {'id': menu.dashboardId.id}) }}">{{ menu.dashboardId.name }}</a>
+		</li>
+	{% endif %}
+{% endfor %}

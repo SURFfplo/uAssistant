@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	    
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>uAssitant</title>
+        
+        {% block stylesheets %}
+
+	        <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+	        <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css"/>
+	        <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css"/>
+	        <script src="{{ asset('assets/js/modernizr.min.js' ) }}"></script>
+	           
+	        <style>
+		        /* Div */
+				.top-buffer { 
+					margin-top:20px; 	
+				}
+				.right-buffer { 
+					margin-right:10px; 	
+				}
+				
+				/* Grid */
+				.grid {
+				  position: relative;
+				}
+				
+				.item {
+				  display: block;
+				  width: 100px;
+				  height: 100px;
+				  margin: 5px;
+				  background: #a5c251;
+				  color: #000000;
+				  border-radius: 6px;
+				}
+				
+				.item:hover {
+				  display: block;
+				  width: 100px;
+				  height: 100px;
+				  margin: 5px;
+				  background: #{{ my_function('SECONDARY_COLOR') }};
+				  border-radius: 6px;
+				}
+				
+				.item.muuri-item-dragging {
+				  z-index: 3;
+				}
+				
+				.item.muuri-item-releasing {
+				  z-index: 2;
+				}
+				
+				.item.muuri-item-hidden {
+				  z-index: 0;
+				}
+				.item-content {
+				  position: relative;
+				  width: 100%;
+				  height: 100%;
+				}
+				
+				.item .icon {
+				  position: absolute;
+				  color: #{{ my_function('PRIMARY_TEXT_COLOR') }};
+				  font-size: 42px;
+				  margin-top: -8px;
+				  margin-left: 2px;
+				  text-align: center;
+				}
+				
+				.item:hover .icon {
+				  color: #{{ my_function('SECONDARY_TEXT_COLOR') }};
+				}
+				
+				.item .tile-label {
+				  position: absolute;
+				  color: #{{ my_function('PRIMARY_TEXT_COLOR') }};
+				  bottom: 0;
+				  left: 2px;
+				  padding: 3px;
+				  z-index: 999;
+				  font-size: 12px;
+				  font-weight: 600;
+				  text-transform: uppercase;
+				}
+				
+				.item:hover .tile-label {
+				  color: #{{ my_function('SECONDARY_TEXT_COLOR') }};
+				}
+				
+				/* Button */
+				.button {
+					display:block;
+					width:50px;
+					height:50px;
+					border-radius:50px;
+					font-size:30px;
+					color:#{{ my_function('PRIMARY_TEXT_COLOR') }};
+					padding-top: 2px;
+					text-align:center;
+					background:#a5c251;
+				}
+				
+				.button:hover {
+					color:#{{ my_function('SECONDARY_TEXT_COLOR') }};
+					text-decoration:none;
+					background:#{{ my_function('SECONDARY_COLOR') }};
+				}
+				
+				.notification {
+					display:block;
+					width:50px;
+					height:50px;
+					border-radius:50px;
+					font-size:30px;
+					color:#{{ my_function('PRIMARY_TEXT_COLOR') }};
+					padding-top: 2px;
+					text-align:center;
+				}
+				
+				.notification:hover {
+					color:#{{ my_function('SECONDARY_TEXT_COLOR') }};
+					text-decoration:none;
+				}
+	        </style>
+	         
+				      
+        {% endblock %}
+              
+    </head>
+    
+    <body>  
+    
+   		 <!-- Begin page -->
+	    <div id="wrapper">
+    
+	    	<!-- navbar -->
+			<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #a5c251;">
+				<a class="navbar-brand" href="#">
+					<img src="{{ asset('assets/logo/logo.svg' ) }}" width="80" height="50" alt="">
+				</a>
+				
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				
+				<div class="collapse navbar-collapse" id="navbarNav">
+				    <ul class="navbar-nav">
+				      	<li class="nav-item active">
+				        	<a class="nav-link" style="text-transform: uppercase;" href="{{ path('settings') }}">Buttons</a>
+						</li>
+				    </ul>
+				</div>
+				<div class="float-right">
+					<a href="{{ path('home') }}" class="notification"><i class="mdi mdi-close"></i></a>
+				</div>
+			</nav>
+			<!-- End navbar -->
+			
+			{% block buttons %}{% endblock %}
+			
+			
+			<!-- Grid -->
+	 	    <div class="container top-buffer">
+	 			<div class="row">
+	 				<div class="col-1"></div>
+	 				<div class="col-10">
+	 				{% block body %}{% endblock %}
+	 				</div>
+	 				<div class="col-1"></div>
+	 			</div>
+	 		</div>
+	        <!-- End Grid -->
+        </div>
+
+        {% block javascripts %}  
+
+        	<!-- jQuery  -->
+	        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+	        <script src="{{ asset('assets/js/popper.min.js') }}"></script>
+	        <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+	        <script src="{{ asset('assets/js/detect.js') }}"></script>
+	        <script src="{{ asset('assets/js/fastclick.js') }}"></script>
+	        <script src="{{ asset('assets/js/jquery.blockUI.js') }}"></script>
+	        <script src="{{ asset('assets/js/waves.js') }}"></script>
+	        <script src="{{ asset('assets/js/jquery.nicescroll.js') }}"></script>
+	        <script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>
+	        <script src="{{ asset('assets/js/jquery.scrollTo.min.js') }}"></script>
+
+			<script src="{{ asset('assets/js/web-animations.min.js') }}"></script>
+			<script src="{{ asset('assets/js/hammer.min.js') }}"></script>
+			<script src="{{ asset('assets/js/muuri.js') }}"></script>
+
+			<script>
+			var grid = new Muuri('.grid', {
+			  dragEnabled: true
+			
+			 });
+			</script>
+
+        {% endblock %}
+        
+    </body>
+</html>
+

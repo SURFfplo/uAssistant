@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+		
+    {{ parent() }}
+    
+{% endblock %}
+
+{% block dashIcon %}
+	<a href="{{ path('home') }}" class="notification"><i class="mdi mdi-close-box-outline"></i></a>
+{% endblock %}
+
+{% block body %}
+
+<h2>Dashboard toevoegen</h2>
+
+{{ form_start(form) }}
+<div class="card">
+  <div class="card-body">
+	  
+	<div class="row">
+	    <div class="col-12">
+		    <b>{{ form_label(form.name) }}</b>
+			{{ form_widget(form.name) }}
+	    </div>
+    </div>
+    <br>
+    <div class="row">
+	    <div class="col-12">
+		    <b>{{ form_label(form.description) }}</b>
+			{{ form_widget(form.description) }}
+	    </div>
+    </div>
+	<br>
+	<div class="row">
+	    <div class="col-12">
+		    <b>{{ form_label(form.hidden) }}</b>
+			{{ form_widget(form.hidden) }}
+			{{ form_help(form.hidden) }}
+	    </div>
+    </div>
+	<br>
+	<div class="row">
+	    <div class="col-12">
+		    <b>{{ form_label(form.public) }}</b>
+			{{ form_widget(form.public) }}
+			{{ form_help(form.public) }}
+	    </div>
+    </div>
+	<br>
+    <div class="row">
+	    <div class="col-12">
+		    {{ form_label(form.save) }}
+			{{ form_widget(form.save) }}
+			<a href="{{ path('dashboard') }}" class="btn btn-dark" role="button" aria-pressed="true">Annuleren</a>
+	    </div>
+    </div>
+    
+  </div>
+</div>
+{{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}  
+	
+	{{ parent() }}
+	
+{% endblock %}
+
+
+

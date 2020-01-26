@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+
+{% block body %}
+
+<div class="grid">
+
+		  <div class="item">
+		    <div class="item-content" onclick="window.open('{{ path('persons') }}','_self');" style="cursor: pointer;">
+		      <!-- Safe zone, enter your custom markup -->
+		      	<span class="icon mdi mdi-account"></span> 
+				<span class="tile-label">Profiel</span>
+		      <!-- Safe zone ends -->
+		    </div>
+		  </div>
+		  
+		  {% for data in data %}
+		  <div class="item">
+		    <div class="item-content" onclick="window.open('newurl.html','mywindow');" style="cursor: pointer;">
+		      <!-- Safe zone, enter your custom markup -->
+		      	<span class="icon mdi mdi-account"></span> 
+				<span class="tile-label">{{ data.name }}</span>
+		      <!-- Safe zone ends -->
+		    </div>
+		  </div>
+		  {% endfor %}
+		  
+
+
+
+{% endblock %}
