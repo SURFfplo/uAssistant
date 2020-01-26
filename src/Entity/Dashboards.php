@@ -5,12 +5,22 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DashboardsRepository")
+ * @Gedmo\Loggable
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  */
 class Dashboards
 {
+    use TimestampableEntity;
+    use BlameableEntity;
+    use SoftDeleteableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -20,21 +30,25 @@ class Dashboards
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Versioned
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Gedmo\Versioned
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Gedmo\Versioned
      */
     private $public;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned
      */
     private $hidden;
 
@@ -46,6 +60,7 @@ class Dashboards
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="dashboards")
      * @ORM\JoinColumn(nullable=false)
+     * @Gedmo\Versioned
      */
     private $userId;
 

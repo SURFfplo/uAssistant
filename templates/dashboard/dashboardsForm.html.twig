@@ -1,18 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-		
-    {{ parent() }}
-    
-{% endblock %}
-
 {% block dashIcon %}
-	<a href="{{ path('home') }}" class="notification"><i class="mdi mdi-close-box-outline"></i></a>
+	<a href="{{ path('home') }}" class="notification"><i class="mdi mdi-close"></i></a>
 {% endblock %}
 
 {% block body %}
 
-<h2>Dashboard toevoegen</h2>
+	{% if 'create' in app.request.uri  %}
+		<h2>Dashboard toevoegen</h2>
+	{% endif %}
+	{% if 'edit' in app.request.uri  %}
+		<h2><i>{{ form.vars.value.name }}</i> - Dashboard bewerken</h2>
+	{% endif %}
 
 {{ form_start(form) }}
 <div class="card">
@@ -62,10 +61,19 @@
 
 {% endblock %}
 
-{% block javascripts %}  
-	
+{% block javascripts %}
+
 	{{ parent() }}
-	
+
+	<script>
+		$(document).ready(function(){
+			$('.select2').select2({
+				theme: "bootstrap4",
+				minimumResultsForSearch: -1,
+				width: '100%'
+			});
+		});
+	</script>
 {% endblock %}
 
 

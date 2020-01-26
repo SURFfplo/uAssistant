@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <!-- DataTables -->
+    <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+
+{% endblock %}
+
+{% block buttons %}
+    <!-- Buttons -->
+    <div class="row float-right top-buffer right-buffer">
+        <a href="{{ path('settings-add-button') }}" class="button right-buffer"><i class="mdi mdi-plus"></i></a>
+    </div>
+    <!-- End Buttons -->
+{% endblock %}
+
+
+{% block body %}
+    <h3>Buttons</h3>
+    <br>
+    <table id="datatable" class="table top-buffer">
+        <col width="130">
+        <thead>
+        <tr>
+            <th>Button</th>
+            <th>Position</th>
+        </tr>
+        </thead >
+
+        <tbody>
+        {% for data in data %}
+            <tr>
+                <td with="120px">
+                    <div>
+                        <div class="item" onclick="window.open('{{ data.url }}');" style="cursor: pointer;">
+                            <div class="item-content">
+                                <!-- Safe zone, enter your custom markup -->
+                                <span class="icon mdi {{ data.icon }}"></span>
+                                <span class="tile-label">{{ data.name }}</span>
+                                <!-- Safe zone ends -->
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <dl class="row">
+                        <dt class="col-sm-3">Naam</dt>
+                        <dd class="col-sm-9">{{ data.name }}</dd>
+
+                        <dt class="col-sm-3">Omschrijving</dt>
+                        <dd class="col-sm-9">{{ data.description }}</dd>
+
+                        <dt class="col-sm-3">Url</dt>
+                        <dd class="col-sm-9">{{ data.url }}</dd>
+
+                        <dt class="col-sm-3"></dt>
+                        <dd class="col-sm-9 text-danger"><a href="{{ path('settings-edit-button', {'id': data.id}) }}">Bewerken</a> - <a href="{{ path('settings-delete-button', {'id': data.id}) }}">Verwijderen</a></dd>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // Default Datatable
+            $('#datatable').DataTable();
+
+
+        });
+
+    </script>
+{% endblock %}

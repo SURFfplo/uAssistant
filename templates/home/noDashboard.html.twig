@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>Oeps, geen dashboards :-(</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <p>Helaas zijn er nog geen dashboards voor jouw aangemaakt. Klik op onderstaande knop om zelf een dashboard aan te maken.</p>
+
+            <a href="{{ path('dashboard-create') }}" class="btn btn-dark" role="button" aria-pressed="true">Dashboard aanmaken</a>
+        </div>
+    </div>
+{% endblock %}
+
+
+

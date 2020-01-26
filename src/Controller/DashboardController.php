@@ -85,6 +85,9 @@ class DashboardController extends AbstractController
 		if (!$data) {
         	throw $this->createNotFoundException('Dashboard does not exist.');
     	}
+
+        // check for "view" access: calls all voters
+        //$this->denyAccessUnlessGranted('view', $data);
          
         return $this->render('dashboard/dashboard.html.twig', [
 	        'data' => $data,

@@ -12,66 +12,14 @@
 	        <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
 	        <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css"/>
 	        <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css"/>
-	        <script src="{{ asset('assets/js/modernizr.min.js' ) }}"></script>
-	        
-	        <style>
-		        /* Div */
-				.top-buffer { 
-					margin-top:20px; 	
-				}
-				.right-buffer { 
-					margin-right:10px; 	
-				}
-				
-				.border-card {
-				  border: 0px;
-				}
+			<link href="{{ asset('assets/plugins/select2/css/select2.css') }}" rel="stylesheet" type="text/css" />
+			<link href="{{ asset('assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" type="text/css"/>
 
-				/* BG Color */
-				.bg-primary {
-					background-color: #{{ my_function('PRIMARY_COLOR') }} !important;
-				}
-				.bg-secondary {
-					background-color: #c3c3c3 !important;
-				}
-				
-				/* Button */
-				.button {
-					display:block;
-					width:50px;
-					height:50px;
-					border-radius:50px;
-					font-size:30px;
-					color:#{{ my_function('PRIMARY_TEXT_COLOR') }};
-					padding-top: 2px;
-					text-align:center;
-					background:#{{ my_function('PRIMARY_COLOR') }};
-					-webkit-box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
-					box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
-				}
-				
-				.button:hover {
-					color:#{{ my_function('SECONDARY_TEXT_COLOR') }};
-					text-decoration:none;
-					background:#{{ my_function('SECONDARY_COLOR') }};
-				}
-				
-				.notification {
-					display:block;
-					width:50px;
-					height:50px;
-					border-radius:50px;
-					font-size:30px;
-					color:#{{ my_function('PRIMARY_TEXT_COLOR') }};
-					padding-top: 2px;
-					text-align:center;
-				}
-				
-				.notification:hover {
-					color:#{{ my_function('SECONDARY_TEXT_COLOR') }};
-					text-decoration:none;
-				}
-	        </style>
+	        <script src="{{ asset('assets/js/modernizr.min.js' ) }}"></script>
+
+
+			<!-- Include styles file with .env variables in styles. -->
+			{{ include('base-styles.html.twig') }}
 	               
         {% endblock %}
               
@@ -110,7 +58,7 @@
 				<div class="float-right">
 					{% if 'dashboard' != app.request.get('_route') %}
 						<div class="badge badge-light" style="position:absolute;margin-left:30px;">0</div>
-						<a href="{{ path('news_items') }}" class="notification"><i class="mdi mdi-bell"></i></a>
+						<a href="" class="notification"><i class="mdi mdi-bell"></i></a>
 					{% endif %}
 				</div>
 				<div class="float-right">
@@ -189,6 +137,7 @@
 			<script src="{{ asset('assets/js/web-animations.min.js') }}"></script>
 			<script src="{{ asset('assets/js/hammer.min.js') }}"></script>
 			<script src="{{ asset('assets/js/muuri.js') }}"></script>
+			<script type="text/javascript" src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
 
 			<script>
 			 

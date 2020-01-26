@@ -4,14 +4,9 @@
 	
 	{{ parent() }} 
 		
-	<style>	
-		
+	<style>
     /* Grid */
-	.grid {
-	  position: relative;
-	}
-	
-	.item {
+	.dashboard {
 	  position: absolute;
       width: 100%;
 	  margin: 5px 0;
@@ -21,7 +16,7 @@
 	  border-radius: 6px;
 	}
 	
-	.item:hover {
+	.dashboard:hover {
 	  position: absolute;
       width: 100%;
 	  margin: 5px 0;
@@ -31,7 +26,7 @@
 	  border-radius: 6px;
 	}
 	
-	.item-content {
+	.dashboard-content {
       position: relative;
       padding: 15px;
       background: #{{ my_function('PRIMARY_COLOR') }};
@@ -46,15 +41,15 @@
 		margin-right:0px; 	
 	}
 	
-	.item.muuri-item-dragging {
+	.dashboard.muuri-item-dragging {
 	  z-index: 3;
 	}
 	
-	.item.muuri-item-releasing {
+	.dashboard.muuri-item-releasing {
 	  z-index: 2;
 	}
 	
-	.item.muuri-item-hidden {
+	.dashboard.muuri-item-hidden {
 	  z-index: 0;
 	}
 	
@@ -64,8 +59,7 @@
 	a:hover {
 		color: #{{ my_function('SECONDARY_TEXT_COLOR') }}; 
 	}
-
-		</style> 
+    </style>
 	
 {% endblock %}
 	
@@ -79,7 +73,7 @@
 {% endblock %}
 
 {% block dashIcon %}
-	<a href="{{ path('home') }}" class="notification"><i class="mdi mdi-close-box-outline"></i></a>
+	<a href="{{ path('home') }}" class="notification"><i class="mdi mdi-close"></i></a>
 {% endblock %}
 
 {% block body %}
@@ -88,8 +82,8 @@
 	<div class="grid">
     
     {% for data in data %}
-    	<div class="item" data-id="{{ data.id }}">
-			<div class="item-content">
+    	<div class="dashboard" data-id="{{ data.id }}">
+			<div class="dashboard-content">
 		        <!-- Safe zone, enter your custom markup -->
 		        <div class="row float-right icon-buffer">
 			        <b>
@@ -113,93 +107,83 @@
 					{% endif %}				
 		        <!-- Safe zone ends -->
 			</div>
-			</div>
+        </div>
     {% endfor %}
     
     </div>
 			    
 {% endblock %}
 
-{% block javascripts %}  
-        
-        	{{ parent() }}
+{% block javascripts %}
 
-			<script>
-			
-			 
-			 //Close alert after x seconds:
-			 window.setTimeout(function() {
-			    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-			        $(this).remove(); 
-			    });
-			}, 4000);
-			
-			
-			
-initGrid();
+    {{ parent() }}
 
-function initGrid() {
-  var grid = new Muuri('.grid', {
-    dragEnabled: true,
-    layoutOnInit: true
-  }).on('move', function () {
-    saveLayout(grid);
-  });
-
-  var layout = window.localStorage.getItem('layout');
-  if (layout) {
-    loadLayout(grid, layout);
-  } else {
-    grid.layout(true);
-  }
-}
-
-function serializeLayout(grid) {
-  var itemIds = grid.getItems().map(function (item) {
-    return item.getElement().getAttribute('data-id');
-  });
-  return JSON.stringify(itemIds);
-}
-
-function saveLayout(grid) {
-  var layout = serializeLayout(grid);
-  
-  $.ajax({
-            data: layout,
-            type: 'POST',
-            url: '/dashboards/sort'
-        });
-        
-  //window.localStorage.setItem('layout', layout);
-}
+    <script>
+        //Close alert after x seconds:
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 4000);
 
 
+        initGrid();
 
-function loadLayout(grid, serializedLayout) {
-  var layout = JSON.parse(serializedLayout);
-  var currentItems = grid.getItems();
-  var currentItemIds = currentItems.map(function (item) {
-    return item.getElement().getAttribute('data-id')
-  });
-  var newItems = [];
-  var itemId;
-  var itemIndex;
+        function initGrid() {
+            var grid = new Muuri('.grid', {
+                dragEnabled: true,
+                layoutOnInit: true
+            }).on('move', function () {
+                saveLayout(grid);
+            });
 
-  for (var i = 0; i < layout.length; i++) {
-    itemId = layout[i];
-    itemIndex = currentItemIds.indexOf(itemId);
-    if (itemIndex > -1) {
-      newItems.push(currentItems[itemIndex])
-    }
-  }
+            var layout = window.localStorage.getItem('layout');
+            if (layout) {
+                loadLayout(grid, layout);
+            } else {
+                grid.layout(true);
+            }
+        }
 
-  grid.sort(newItems, {layout: 'instant'});
-}
-			
-			</script>
+        function serializeLayout(grid) {
+            var itemIds = grid.getItems().map(function (dashboard) {
+                return dashboard.getElement().getAttribute('data-id');
+            });
+            return JSON.stringify(itemIds);
+        }
 
+        function saveLayout(grid) {
+            var layout = serializeLayout(grid);
 
+            $.ajax({
+                data: layout,
+                type: 'POST',
+                url: '/dashboards/sort'
+            });
 
+            //window.localStorage.setItem('layout', layout);
+        }
 
+        function loadLayout(grid, serializedLayout) {
+            var layout = JSON.parse(serializedLayout);
+            var currentItems = grid.getItems();
+            var currentItemIds = currentItems.map(function (dashboard) {
+                return item.getElement().getAttribute('data-id')
+            });
+            var newItems = [];
+            var itemId;
+            var itemIndex;
 
-        {% endblock %}
+            for (var i = 0; i < layout.length; i++) {
+                itemId = layout[i];
+                itemIndex = currentItemIds.indexOf(itemId);
+                if (itemIndex > -1) {
+                    newItems.push(currentItems[itemIndex])
+                }
+            }
+
+            grid.sort(newItems, {layout: 'instant'});
+        }
+
+    </script>
+{% endblock %}

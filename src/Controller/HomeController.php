@@ -20,7 +20,7 @@ class HomeController extends AbstractController
         $data = $em->getRepository(DashboardsFromUser::class)->findByUserId($user->getId());
 
         if (!$data) {
-            //TODO: Doorsturen naar aanmaken van dashboard pagina.
+            return $this->render('home/noDashboard.html.twig', []);
         }
 
         $id = $data[0]->getDashboardId()->getId();

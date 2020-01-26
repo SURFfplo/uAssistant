@@ -3,12 +3,21 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DashboardsFromUserRepository")
+ * @Gedmo\Loggable
  */
 class DashboardsFromUser
 {
+    use TimestampableEntity;
+    use BlameableEntity;
+    use SoftDeleteableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -19,17 +28,20 @@ class DashboardsFromUser
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="dashboardsFromUsers")
      * @ORM\JoinColumn(nullable=false)
+     * @Gedmo\Versioned
      */
     private $userId;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Dashboards", inversedBy="dashboardsFromUsers")
      * @ORM\JoinColumn(nullable=false)
+     * @Gedmo\Versioned
      */
     private $dashboardId;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Versioned
      */
     private $userRole;
 
