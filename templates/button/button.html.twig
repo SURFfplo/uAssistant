@@ -1,14 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-
-    <!-- DataTables -->
-    <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
-
-{% endblock %}
 
 {% block buttons %}
     <!-- Buttons -->
@@ -69,10 +60,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-
-    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
